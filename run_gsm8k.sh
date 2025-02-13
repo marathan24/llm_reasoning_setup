@@ -18,9 +18,9 @@ echo "Starting script at $(date)"
 set -e
 
 # Your existing script content here, updated based on launch.json
-DATA_ROOT=""
+DATA_ROOT="./data/test_25.jsonl"
 OUTPUT_ROOT="./results_gsm8k"
-MODEL="gpt"
+MODEL="gpt-4o-mini"
 API_KEY=""
 API_URL="https://api.openai.com/v1/chat/completions"
 TEST_SPLIT="test"

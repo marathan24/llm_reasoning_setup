@@ -17,11 +17,11 @@ if api_base != "":
 def completions_with_backoff(**kwargs):
     return openai.ChatCompletion.create(**kwargs)
 
-def gpt(prompt, model="gpt-3.5-turbo", temperature=0.7, max_tokens=1000, n=1, stop=None) -> list:
+def gpt(prompt, model="gpt-4o-mini", temperature=0.7, max_tokens=1000, n=1, stop=None) -> list:
     messages = [{"role": "user", "content": prompt}]
     return chatgpt(messages, model=model, temperature=temperature, max_tokens=max_tokens, n=n, stop=stop)
     
-def chatgpt(messages, model="gpt-3.5-turbo", temperature=0.7, max_tokens=1000, n=1, stop=None) -> list:
+def chatgpt(messages, model="gpt-4o-mini", temperature=0.7, max_tokens=1000, n=1, stop=None) -> list:
     global completion_tokens, prompt_tokens
     outputs = []
     while n > 0:
@@ -34,7 +34,7 @@ def chatgpt(messages, model="gpt-3.5-turbo", temperature=0.7, max_tokens=1000, n
         prompt_tokens += res["usage"]["prompt_tokens"]
     return outputs
     
-def gpt_usage(backend="gpt-3.5-turbo"):
+def gpt_usage(backend="gpt-4o-mini"):
     global completion_tokens, prompt_tokens
     if backend == "gpt-4":
         cost = completion_tokens / 1000 * 0.06 + prompt_tokens / 1000 * 0.03

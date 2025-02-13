@@ -34,7 +34,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_root', type=str, default='')
     parser.add_argument('--output_root', type=str, default='./results')
-    parser.add_argument('--model', type=str, default='gpt-3.5-turbo')
+    parser.add_argument('--model', type=str, default='gpt-4o-mini')
     parser.add_argument('--label', type=str, default='exp0')
     parser.add_argument('--test_split', type=str, default='val', choices=['test', 'val', 'minival', 'train'])
     parser.add_argument('--test_number', type=int, default=10, help='GPT-3 is expensive. -1 for whole val/test set')
@@ -71,7 +71,7 @@ def parse_args():
     parser.add_argument('--n_evaluate_sample', type=int, default=5, help='Number of samples to evaluate.')
     parser.add_argument('--n_select_sample', type=int, default=1, help='Number of samples to select.')
     parser.add_argument('--prompt_sample', type=str, default='cot', help='Prompt sample type (e.g., cot for Chain of Thought).')
-    parser.add_argument('--backend', type=str, default='gpt-3.5-turbo', help='')
+    parser.add_argument('--backend', type=str, default='gpt-4o-mini', help='')
 
     from tasks import get_task
     global task
@@ -106,8 +106,9 @@ def load_data(args):
 
 def get_result_file(args):
     result_file = "{}/{}/{}_{}_seed_{}.json".format(args.output_root, args.model, args.label, args.test_split, args.seed)
-
-    os.makedirs(os.path.dirname(args.output_root), exist_ok=True)
+    
+    # Create the full directory path
+    os.makedirs(os.path.dirname(result_file), exist_ok=True)
 
     return result_file
     
@@ -123,7 +124,7 @@ def get_single_run_gpt(cot_prompt, prompt, args):
     response = requests.post(args.api_url, 
                             headers=headers, 
                             json={
-                                "model": 'gpt-3.5-turbo',
+                                "model": 'gpt-4o-mini',
                                 # "model": 'gpt-4',
                                 # "model": 'gpt-4o-mini',
                                 "messages": [
@@ -221,7 +222,7 @@ def answer_review(task, question=None, depth=0, history='', args=None):
     """
     Conduct multiple rounds of reasoning and verification.
     """
-    if args.model == 'gpt':
+    if args.model == 'gpt-4o-mini':
         get_single_run = get_single_run_gpt
     else:
         raise NotImplementedError('undefined model')

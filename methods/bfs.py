@@ -48,7 +48,7 @@ def get_samples(task, x, y, n_generate_sample, prompt_sample, stop):
 
 def solve(args, task, question, to_print=False):
     global gpt
-    gpt = partial(gpt, model=args.backend, temperature=1.0)
+    gpt = partial(gpt, model="gpt-4o-mini", temperature=1.0)
     print(gpt)
     x = question  # input (# Retrieves the 4 numbers for the puzzle in Game of 24)
     ys = ['']  # current output candidates (# Empty thought to start with)
